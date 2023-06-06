@@ -10,7 +10,11 @@ public class PlayerLocomotion : MonoBehaviour
     Transform cameraObject;
     Rigidbody playerRigidbody;
 
-    public float movementSpeed = 7.0f;
+    public bool isSprinting;
+
+    public float walkingSpeed = 1.5f;
+    public float runningSpeed = 5.0f;
+    public float sprintSpeed = 7.0f;
     public float rotationSpeed = 15.0f;
 
 
@@ -33,7 +37,29 @@ public class PlayerLocomotion : MonoBehaviour
         moveDirection = moveDirection + cameraObject.right * inputManager.horizontalInput;
         moveDirection.Normalize();
         moveDirection.y = 0;
-        moveDirection = moveDirection * movementSpeed;
+
+
+        if(isSprinting)
+        {
+            moveDirection = moveDirection * sprintSpeed;
+        }
+        else
+        {
+            if (inputManager.moveAmount >= 0.5f)
+            {
+                moveDirection = moveDirection * runningSpeed;
+            }
+            else
+            {
+                moveDirection = moveDirection * walkingSpeed;
+            }
+        }
+
+      
+
+        //전력질주
+        //달리기
+        //걷기
 
 
         Vector3 movementVelocity = moveDirection;
